@@ -1,0 +1,36 @@
+<h2 align='center'> 
+  Jenius SMS Blast
+</h2>
+
+<div class="border-form-div">
+
+  <%= form_tag({:action => :import}, multipart: true) do %>
+    <h4> Your message: </h4>
+    <%= text_area_tag 'message', nil, size: "25x10", maxlength: "160", onKeyUp: "count_it()" %>
+
+    <br />
+    <span id="counter"></span> characters remainging
+
+    <br />
+    <%= file_field_tag :file %>
+
+    <br />
+    <br />
+    <%= submit_tag( "Import" ) %>
+  <% end %>
+
+</div>
+
+<div class="border-form-div">
+  <%= link_to "Dashboard", '/admin' %>
+
+  <br />
+  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
+</div>
+
+<script type="text/javascript">
+    function count_it() {
+          document.getElementById('counter').innerHTML = 160 - document.getElementById('message').value.length;
+      }
+    count_it();
+</script>
