@@ -21,12 +21,7 @@
 
 </div>
 
-<div class="border-form-div">
-  <%= link_to "Dashboard", '/admin' %>
-
-  <br />
-  <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-</div>
+<%= render "footer_sms" %>
 
 <script type="text/javascript">
     function count_it() {

@@ -14,14 +14,24 @@ class SmsController < ApplicationController
 
         begin 
             CSV.foreach(params[:file].path, :headers => true) do |row|
-                ap (row['phone'])
-                # SmsWorker.perform_async(params['message'], row['phone'])
+                SmsWorker.perform_async(row['phone'], params['message'], SMS_CATEGORY_ID, SMS_GW_URL)
             end
         rescue
             return fail_redirect(FILE_CSV_ERROR)
         end
 
         success_redirect("sending sms for #{params[:file].original_filename} with message #{params[:message]} ")
+    end
+
+    def template
+      require 'csv'
+
+      respond_to do |format|
+        format.csv do
+          headers['Content-Disposition'] = "attachment; filename=\"phone_template.csv\""
+          headers['Content-Type'] ||= 'text/csv'
+        end
+      end
     end
 
     private
@@ -41,7 +51,7 @@ class SmsController < ApplicationController
 
     def validate_message(message)
         return MAX_MESSAGE_ERROR if message.length >= MAX_MESSAGE_LENGTH
-        return MIN_MESSAGE_ERROR if message.length <= MIN_MESSAGE_LENGTH
+        return MIN_MESSAGE_ERROR if message.length < MIN_MESSAGE_LENGTH
     end
 
     def fail_redirect(alert)

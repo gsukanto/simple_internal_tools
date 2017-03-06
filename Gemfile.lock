@@ -56,6 +56,7 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.0.5)
     connection_pool (2.2.1)
+    curb (0.9.3)
     debug_inspector (0.0.2)
     devise (4.2.0)
       bcrypt (~> 3.0)
@@ -83,6 +84,8 @@ GEM
     jquery-ui-rails (5.0.5)
       railties (>= 3.2.16)
     json (1.8.6)
+    jsonpath (0.5.8)
+      multi_json
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -211,10 +214,12 @@ DEPENDENCIES
   byebug
   cancancan (~> 1.15)
   coffee-rails (~> 4.1.0)
+  curb (~> 0.9.3)
   devise (~> 4.2)
   dotenv (~> 2.1, >= 2.1.1)
   jbuilder (~> 2.0)
   jquery-rails
+  jsonpath (~> 0.5.8)
   pg (~> 0.15)
   rails (= 4.2.7.1)
   rails_admin (~> 1.0)
@@ -230,4 +235,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.14.3
+   1.14.5

@@ -47,6 +47,12 @@ gem 'cancancan', '~> 1.15'
 # Role management library
 gem 'rolify', '~> 5.1'
 
+# Libcurl
+gem 'curb', '~> 0.9.3'
+
+# Traverse JSON
+gem 'jsonpath', '~> 0.5.8'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

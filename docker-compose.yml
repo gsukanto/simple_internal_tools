@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres
+  redis:
+    image: redis
+  web_internal_tools:
+    build: .
+    command: unicorn
+    volumes:
+      - .:/internal_development_tools
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .env
+  sidekiq_internal_tools:
+    build: .
+    command: bundle exec sidekiq -c 5
+    volumes:
+      - .:/internal_development_tools
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - .env
+  

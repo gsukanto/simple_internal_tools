@@ -9,6 +9,8 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
 
     get 'sms' => 'sms#index'
+    get 'phone_template' => 'sms#template'
+
     post 'import' => 'sms#import'
   end
 

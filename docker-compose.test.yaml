@@ -1,0 +1,58 @@
+version: '2'
+
+services:
+  postgres:
+    image: postgres
+  
+  redis:
+    image: redis
+  
+  web_internal_tools:
+    build: .
+    command: unicorn
+    volumes:
+      - .:/internal_development_tools
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - redis
+      - web_sms
+    env_file:
+      - .env
+  
+  sidekiq_internal_tools:
+    build: .
+    command: bundle exec sidekiq -c 5
+    volumes:
+      - .:/internal_development_tools
+    depends_on:
+      - postgres
+      - redis
+      - web_sms
+    env_file:
+      - .env
+
+  web_sms:
+    build: ../smsgw
+    command: bundle exec rails s -b 0.0.0.0
+    volumes:
+      - ../smsgw:/smsgw
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ../smsgw/.env
+      
+  sidekiq_sms:
+    build: ../smsgw
+    command: bundle exec sidekiq
+    volumes:
+      - ../smsgw:/smsgw
+    depends_on:
+      - postgres
+      - redis
+    env_file:
+      - ../smsgw/.env
